@@ -37,35 +37,35 @@ public class Schedule extends BaseEntity{
     }
 
     /**
-     * 아이디 반환
+     * @return 아이디
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * 일정 제목 반환
+     * @return 일정 제목
      */
     public String getTitle() {
         return title;
     }
 
     /**
-     * 일정 내용 반환
+     * @return 일정 내용
      */
     public String getContent() {
         return content;
     }
 
     /**
-     * 작성자명 반환
+     * @return 작성자명
      */
     public String getAuthor() {
         return author;
     }
 
     /**
-     * 비밀번호 반환
+     * @return 비밀번호
      * 응답에 포함하지 말 것
      */
     public String getPassword() {
