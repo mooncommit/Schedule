@@ -29,7 +29,7 @@ public class Schedule extends BaseEntity{
      * @param author 작성자명
      * @param password 비밀번호
      */
-    protected Schedule(String title, String content, String author, String password) {
+    public Schedule(String title, String content, String author, String password) {
         this.title = title;
         this.content = content;
         this.author = author;
