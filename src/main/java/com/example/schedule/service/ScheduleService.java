@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 비즈니스 로직 처리
  */
@@ -42,5 +44,15 @@ public class ScheduleService {
                 savedSchedule.getModifiedAt()
         );
         return responseDto;
+    }
+
+    /**
+     * 일정 전체 조회
+     */
+    @Transactional
+    public List<ScheduleResponseDto> getAllSchedules(String author) {
+        // 작성자명(author) 있는지 없는지 확인
+        // 여기 만들어야함
+
     }
 }
