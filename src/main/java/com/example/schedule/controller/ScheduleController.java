@@ -1,5 +1,6 @@
 package com.example.schedule.controller;
 
+import com.example.schedule.dto.GetAllSchedulesResponse;
 import com.example.schedule.dto.ScheduleRequestDto;
 import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.service.ScheduleService;
@@ -14,6 +15,7 @@ import java.util.List;
  * 요청 / 응답
  */
 @RestController
+@RequestMapping("/schedules")
 @RequiredArgsConstructor // 의존성 주입
 public class ScheduleController {
     private final ScheduleService scheduleService;
@@ -22,7 +24,7 @@ public class ScheduleController {
      * 일정 생성
      * 클라이언트 요청을 받아 일정을 저장하고 결과를 반환
      */
-    @PostMapping("/schedules")
+    @PostMapping
     public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto request) {
         // Service에 요청 데이터를 넘겨서 저장
         ScheduleResponseDto responseDto = scheduleService.save(request);
@@ -31,12 +33,19 @@ public class ScheduleController {
     }
 
     /**
-     * 일정 전체 조회
+     * 전체 일정 조회
      */
-    @GetMapping("/schedules")
-    public ResponseEntity<List<ScheduleResponseDto>> getAllSchedules (@RequestParam (required = false)String author) {
-        List<ScheduleResponseDto> responseDtoList = scheduleService.getAllSchedules(author);
+    @GetMapping
+    public ResponseEntity<List<GetAllSchedulesResponse>> getAllSchedule (@RequestParam (required = false)String author) {
+        List<GetAllSchedulesResponse> responseDtoList = scheduleService.getAllSchedules(author);
         return ResponseEntity.ok(responseDtoList);
+    }
+
+    /**
+     * 선택 일정 조회
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<List<GetAllSchedulesResponse>> getOneSchedule (@PathVariable Long id) {
 
     }
 }

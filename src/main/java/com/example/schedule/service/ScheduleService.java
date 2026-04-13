@@ -1,5 +1,6 @@
 package com.example.schedule.service;
 
+import com.example.schedule.dto.GetAllSchedulesResponse;
 import com.example.schedule.dto.ScheduleRequestDto;
 import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.entity.Schedule;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 비즈니스 로직 처리
@@ -49,10 +51,18 @@ public class ScheduleService {
     /**
      * 일정 전체 조회
      */
-    @Transactional
-    public List<ScheduleResponseDto> getAllSchedules(String author) {
-        // 작성자명(author) 있는지 없는지 확인
-        // 여기 만들어야함
+    @Transactional(readOnly = true) // 이 메서드는 읽기만 할거(조회 전용)
+    public List<GetAllSchedulesResponse> getAllSchedules(String author) {
+        // DB에서 Entity List 가져오기
+        List<Schedule> schedules = scheduleRepository.findByAuthor(author);
 
+        // Schedule List를 Schedule stream으로 바꾼다 (stream객체)
+        List<GetAllSchedulesResponse> responses = schedules.stream()
+                // 변환
+                .map(schedule -> new GetAllSchedulesResponse(
+                        schedule.getId(), schedule.getTitle(), schedule.getContent(),
+                        schedule.getAuthor(), schedule.getCreatedAt(), schedule.getModifiedAt()))
+                .collect(Collectors.toList());
+        return responses;
     }
 }
