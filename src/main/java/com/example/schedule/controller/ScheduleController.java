@@ -55,6 +55,9 @@ public class ScheduleController {
         return ResponseEntity.ok(responseListDto);
     }
 
+    /**
+     * 선택한 일정 수정
+     */
     @PutMapping("/{id}")
     public ResponseEntity<UpdateScheduleResponseDto> updateSchedul (
             @PathVariable Long id,
@@ -63,4 +66,17 @@ public class ScheduleController {
         UpdateScheduleResponseDto responseDto = scheduleService.updateSchedule(id, request);
         return ResponseEntity.ok(responseDto);
     }
+
+    /**
+     * 선택한 일정 삭제
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSchedule(
+            @PathVariable Long id,
+            @RequestBody DeleteScheduleRequestDto result
+    ) {
+        scheduleService.deleteSchedule(id, result);
+        return ResponseEntity.ok().build(); // 성공, 줄 body 없음
+    }
+
 }
