@@ -1,9 +1,6 @@
 package com.example.schedule.service;
 
-import com.example.schedule.dto.GetAllSchedulesResponse;
-import com.example.schedule.dto.GetSchedulesResponse;
-import com.example.schedule.dto.ScheduleRequestDto;
-import com.example.schedule.dto.ScheduleResponseDto;
+import com.example.schedule.dto.*;
 import com.example.schedule.entity.Schedule;
 import com.example.schedule.repository.ScheduleRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -90,5 +87,29 @@ public class ScheduleService {
                  schedule.getContent(), schedule.getAuthor(), schedule.getCreatedAt(), schedule.getModifiedAt());
         // DTO 반환
         return response;
+    }
+
+    /**
+     * 일정 수정
+     * @param id 수정할 일정의 ID
+     * @param result 수정할 데이터 (제목, 작성자명, 비밀번호)
+     * @return 수정된 일정 정보 (비밀번호 제외)
+     */
+    @Transactional
+    public UpdateScheduleResponseDto updateSchedule(Long id, UpdateScheduleRequestDto result) {
+        Schedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("해당 일정이 없습니다!"));
+        // 클라이언트가 입력한 비밀번호 검증
+        if (!schedule.getPassword().equals(result.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        // 값 수정
+        schedule.updateData(result);
+        // Entity → DTO 변환
+        UpdateScheduleResponseDto responseDto = new UpdateScheduleResponseDto(
+                schedule.getId(), schedule.getTitle(),schedule.getContent(),
+                schedule.getAuthor(),schedule.getCreatedAt(),schedule.getModifiedAt());
+
+        return responseDto;
     }
 }
