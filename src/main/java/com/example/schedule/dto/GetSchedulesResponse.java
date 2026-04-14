@@ -3,11 +3,10 @@ package com.example.schedule.dto;
 import java.time.LocalDateTime;
 
 /**
- * 전체 일정 조회 응답 DTO
+ * 선택 일정 조회 응답 DTO
  * 서버가 클라이언트로 전송하는 데이터
  */
-public class GetAllSchedulesResponse {
-
+public class GetSchedulesResponse {
     private final Long id;
     private final String title;
     private final String content;
@@ -23,7 +22,7 @@ public class GetAllSchedulesResponse {
      * @param content 일정 내용
      * @param author  작성자명
      */
-    public GetAllSchedulesResponse(Long id, String title, String content, String author, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public GetSchedulesResponse(Long id, String title, String content, String author, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.id = id;
         this.title = title;
         this.content = content;

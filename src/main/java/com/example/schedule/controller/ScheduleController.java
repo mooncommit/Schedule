@@ -1,6 +1,7 @@
 package com.example.schedule.controller;
 
 import com.example.schedule.dto.GetAllSchedulesResponse;
+import com.example.schedule.dto.GetSchedulesResponse;
 import com.example.schedule.dto.ScheduleRequestDto;
 import com.example.schedule.dto.ScheduleResponseDto;
 import com.example.schedule.service.ScheduleService;
@@ -28,24 +29,32 @@ public class ScheduleController {
     public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto request) {
         // Service에 요청 데이터를 넘겨서 저장
         ScheduleResponseDto responseDto = scheduleService.save(request);
-        // 저장된 결과를 클라이언트에게 반환
+        // 저장된 결과를 클라이언트에게 반환 상태코드 : 201
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     /**
      * 전체 일정 조회
+     * 작성자(author)가 있으면 해당 작성자의 일정만 조회
+     * 없으면 전체 일정 조회
      */
     @GetMapping
     public ResponseEntity<List<GetAllSchedulesResponse>> getAllSchedule (@RequestParam (required = false)String author) {
+        // Service에 author 조건을 넘겨서 일정 목록 조회
         List<GetAllSchedulesResponse> responseDtoList = scheduleService.getAllSchedules(author);
+        // 조회된 결과를 200 OK 상태코드와 함께 반환
         return ResponseEntity.ok(responseDtoList);
     }
 
     /**
      * 선택 일정 조회
+     * URL 경로의 id 값을 꺼내 조회
      */
     @GetMapping("/{id}")
-    public ResponseEntity<List<GetAllSchedulesResponse>> getOneSchedule (@PathVariable Long id) {
-
+    public ResponseEntity<GetSchedulesResponse> getOneSchedule (@PathVariable Long id) {
+        // Service에 id를 넘겨 해당 일정 단건 조회
+        GetSchedulesResponse responseListDto = scheduleService.getSchedule(id);
+        // 조회된 결과를 200 OK 상태코드와 함께 반환
+        return ResponseEntity.ok(responseListDto);
     }
 }
