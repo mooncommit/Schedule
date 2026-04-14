@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /**
@@ -111,5 +112,18 @@ public class ScheduleService {
                 schedule.getAuthor(),schedule.getCreatedAt(),schedule.getModifiedAt());
 
         return responseDto;
+    }
+
+    @Transactional
+    public void deleteSchedule(Long id, DeleteScheduleRequestDto result) {
+        // 삭제할 일정 조회
+        Schedule schedule = scheduleRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("삭제할 일정이 없습니다."));
+        // 비밀번호 검증
+        if (!schedule.getPassword().equals(result.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        // 해당 일정 삭제
+        scheduleRepository.delete(schedule);
     }
 }
