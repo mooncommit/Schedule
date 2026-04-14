@@ -59,8 +59,8 @@ public class ScheduleController {
     public ResponseEntity<UpdateScheduleResponseDto> updateSchedul (
             @PathVariable Long id,
             @RequestBody UpdateScheduleRequestDto request) {
-        // Service에 id를 넘겨 일정 제목, 작성자명 슈정
+        // Service에 id를 넘겨 일정 제목, 작성자명 수정
         UpdateScheduleResponseDto responseDto = scheduleService.updateSchedule(id, request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+        return ResponseEntity.ok(responseDto);
     }
 }
