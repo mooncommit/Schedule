@@ -1,5 +1,7 @@
 package com.example.schedule.entity;
 
+import com.example.schedule.dto.UpdateScheduleRequestDto;
+import com.example.schedule.dto.UpdateScheduleResponseDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -70,5 +72,15 @@ public class Schedule extends BaseEntity{
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * 일정 정보 수정
+     * 요청 DTO를 기반으로 일정의 제목과 작성자명을 수정
+     * @param result 수정할 데이터 (제목, 작성자명)
+     */
+    public void updateData(UpdateScheduleRequestDto result) {
+        this.title = result.getTitle();
+        this.author = result.getAuthor();
     }
 }

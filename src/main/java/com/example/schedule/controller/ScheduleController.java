@@ -1,9 +1,6 @@
 package com.example.schedule.controller;
 
-import com.example.schedule.dto.GetAllSchedulesResponse;
-import com.example.schedule.dto.GetSchedulesResponse;
-import com.example.schedule.dto.ScheduleRequestDto;
-import com.example.schedule.dto.ScheduleResponseDto;
+import com.example.schedule.dto.*;
 import com.example.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +27,7 @@ public class ScheduleController {
         // Service에 요청 데이터를 넘겨서 저장
         ScheduleResponseDto responseDto = scheduleService.save(request);
         // 저장된 결과를 클라이언트에게 반환
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     /**
@@ -56,5 +53,14 @@ public class ScheduleController {
         GetSchedulesResponse responseListDto = scheduleService.getSchedule(id);
         // 조회된 결과를 200 OK 상태코드와 함께 반환
         return ResponseEntity.ok(responseListDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UpdateScheduleResponseDto> updateSchedul (
+            @PathVariable Long id,
+            @RequestBody UpdateScheduleRequestDto request) {
+        // Service에 id를 넘겨 일정 제목, 작성자명 슈정
+        UpdateScheduleResponseDto responseDto = scheduleService.updateSchedule(id, request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 }
