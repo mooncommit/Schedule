@@ -90,6 +90,5 @@ public class ScheduleService {
                  schedule.getContent(), schedule.getAuthor(), schedule.getCreatedAt(), schedule.getModifiedAt());
         // DTO 반환
         return response;
-
     }
 }

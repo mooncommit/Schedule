@@ -29,8 +29,8 @@ public class ScheduleController {
     public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto request) {
         // Service에 요청 데이터를 넘겨서 저장
         ScheduleResponseDto responseDto = scheduleService.save(request);
-        // 저장된 결과를 클라이언트에게 반환 상태코드 : 201
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+        // 저장된 결과를 클라이언트에게 반환
+        return ResponseEntity.ok(responseDto);
     }
 
     /**
